@@ -10,15 +10,24 @@ class DockingStation
   end
 
   def release_bike
-    fail 'No bike available' unless @collection.count > 0
+    fail 'No bike available' unless empty?
     Bike.new
     @collection.pop
   end
 
   def dock(bike)
-    fail "Docking station is full" if @collection.count == 20
-    @bike = bike
-    @collection.push(@bike)
+    fail "Docking station is full" if full?
+    @collection << bike
+
+  end
+
+  private
+  def full?
+    @collection.count == 3
+  end
+
+  def empty?
+    @collection.empty?
   end
 
 end
