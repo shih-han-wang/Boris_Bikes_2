@@ -4,7 +4,7 @@ class DockingStation
 
   attr_reader :bike
   attr_reader :collection
-
+  DEFAULT_CAPACITY = 20
   def initialize
     @collection = []
   end
@@ -23,7 +23,7 @@ class DockingStation
 
   private
   def full?
-    @collection.count == 3
+    @collection.count == DEFAULT_CAPACITY
   end
 
   def empty?
