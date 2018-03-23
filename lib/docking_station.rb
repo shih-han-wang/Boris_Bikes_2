@@ -2,11 +2,11 @@ require_relative 'bike'
 
 class DockingStation
 
-  attr_reader :bike
-  # def bike
-  #   @bike
-  # end
-  attr_reader :collection
+  # attr_reader :bike
+  # # def bike
+  # #   @bike
+  # # end
+  # attr_reader :collection
   attr_reader :capacity
 
   DEFAULT_CAPACITY = 20
@@ -17,15 +17,14 @@ class DockingStation
   end
 
   def release_bike
-    fail 'No bike available' if empty?
-    Bike.new
-    @collection.pop
+    raise 'No bike available' if empty? || !@collection.any? {|bike| bike.working}
+    @collection.delete_at(@collection.index{|bike| bike.working})
   end
 
-  def dock(bike)
-    fail "Docking station is full" if full?
+  def dock(bike, broken = false)
+    raise "Docking station is full" if full?
+    bike.working = false if broken
     @collection << bike
-
   end
 
   private
