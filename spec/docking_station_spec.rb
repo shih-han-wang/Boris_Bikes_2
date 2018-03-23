@@ -5,6 +5,10 @@ describe DockingStation do
 
   it { is_expected.to respond_to :release_bike }
 
+  it 'default capacity is 20 when no argument given' do
+    expect(subject.capacity).to be 20
+  end
+
   it 'releases working bikes' do
     subject.dock Bike.new
     bike = subject.release_bike
@@ -19,12 +23,12 @@ describe DockingStation do
   it 'return docked bikes' do
     bike = Bike.new
     subject.dock(bike)
-    expect(subject.bike).to eq bike
+    expect(subject.bike).to eq @bike
   end
 
   describe '#release_bike' do
     it 'raises an error' do
-      # 20.times { subject.release_bike Bike.new }
+      # 20.times { subject.dock Bike.new }
       expect { subject.release_bike }.to raise_error ("No bike available")
     end
   end
