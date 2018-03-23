@@ -12,7 +12,7 @@ describe DockingStation do
   describe '#release_bike' do
     it "releases bike if there is a bike" do
       station = DockingStation.new
-      station.dock(Bike.new)
+      station.dock double(:bike)
       expect(station.release_bike).to be_an_instance_of(Bike)
     end
     it 'raises an error when no bike available' do
@@ -20,14 +20,14 @@ describe DockingStation do
     end
     it 'raises an error when all bikes are broken' do
       station = DockingStation.new
-      10.times{ station.dock(Bike.new, true) }
+      10.times{ station.dock(double(:bike), true) }
       expect { station.release_bike }.to raise_error ("No bike available")
     end
     it 'releases working bikes' do
       station = DockingStation.new
-      station.dock(Bike.new, true)
-      station.dock(Bike.new)
-      station.dock(Bike.new, true)
+      station.dock(double(:bike), true)
+      station.dock(double(:bike))
+      station.dock(double(:bike), true)
       expect(station.release_bike.working).to eq true
     end
   end
@@ -47,19 +47,19 @@ describe DockingStation do
   describe '#dock' do
     it ' raises an error when full' do
       station = DockingStation.new(40)
-      40.times {station.dock Bike.new}
+      40.times {station.dock double(:bike)}
       expect { station.dock("bike") }.to raise_error ("Docking station is full")
     end
 
     it 'docks bike if station not full' do
       station = DockingStation.new
-      bike = Bike.new
+      bike = double(:bike)
       expect(station.dock(bike)).to include(bike)
     end
 
     it 'allowed to report the bike is broken' do
       station = DockingStation.new
-      bike = Bike.new
+      bike = double(:bike)
       station.dock(bike, true)
       expect(bike.working).to eq false
     end
